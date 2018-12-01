@@ -1,4 +1,4 @@
-lines = File.readlines('./testcase', :chomp=> true)
+lines = File.readlines('./input', :chomp=> true)
 freq = 0
 lines.each { |i| freq += i.to_i }
 
