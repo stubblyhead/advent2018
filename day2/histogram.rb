@@ -1,3 +1,5 @@
+require 'pry'
+binding.pry
 box_ids = File.readlines('./input', :chomp => true)
 
 two_counts = 0
@@ -21,9 +23,12 @@ end
 (0..box_ids.length - 2).each do |i|
   (i + 1..box_ids.length - 1).each do |j|
     if one_off?(box_ids[i], box_ids[j])
-      common_chars = (box_ids[i].chars & box_ids[j].chars).join
-      puts "common characters are #{common_chars}"
-      exit
+      (0..box_ids[i].length - 1).each do |k|
+        if box_ids[i][k] != box_ids[j][k]
+          puts "common characters are #{box_ids[i][0,k] + box_ids[i][k+1..-1]}"
+          exit
+        end
+      end
     end
   end
 
