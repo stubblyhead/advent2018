@@ -3,7 +3,7 @@ grid = Array.new(1050) { Array.new(1050) { 0 } }
 claims = {} #it doesn't matter that multiple claims can start at the same point
             #because if they do they're automatically disqualified from being the
             #only non-overlapping claim
-lines = File.readlines('./testcase', :chomp => true)
+lines = File.readlines('./input', :chomp => true)
 lines.each do |i|
   parts = i.split(/@|:/)
   corner = parts[1].split(',').map { |i| i.to_i }
