@@ -3,6 +3,8 @@ binding.pry
 
 
 class Polymer
+  attr_reader :chain
+
   def initialize(str)
     @chain = str
   end
@@ -22,7 +24,7 @@ class Polymer
   end
 end
 
-my_polymer = Polymer.new(File.read('./testcase', :chomp => true))
+my_polymer = Polymer.new(File.read('./testcase').chomp)
 
 my_polymer.react
-puts my_polymer
+puts my_polymer.chain.length
