@@ -1,7 +1,3 @@
-require 'pry'
-binding.pry
-
-
 class Polymer
   attr_reader :chain
 
@@ -10,10 +6,12 @@ class Polymer
   end
 
   def react
-    (0..@chain.length-2).each do |i|
-      if @chain[i] == @chain[i+1].swapcase
-        @chain = @chain[0,i] + @chain[i+2..-1]
-        react
+    while true
+      (0..@chain.length-2).each do |i|
+        if @chain[i] == @chain[i+1].swapcase
+          @chain = @chain[0,i] + @chain[i+2..-1]
+          break
+        end
         break
       end
     end
