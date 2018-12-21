@@ -23,7 +23,13 @@ class Polymer
   end
 end
 
-my_polymer = Polymer.new(File.read('./testcase').chomp)
+my_polymer = File.read('./input').chomp
+lengths = {}
+('a'..'z').each do |i|
+  str = my_polymer.gsub(i,'').gsub(i.swapcase,'')
+  this_polymer = Polymer.new(str)
+  this_polymer.react
+  lengths[i] = this_polymer.chain.length
+end
 
-my_polymer.react
-puts my_polymer.chain, my_polymer.chain.length
+puts lengths.values.min
