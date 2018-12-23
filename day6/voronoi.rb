@@ -1,11 +1,12 @@
 class Voronoi
-  attr_reader :grid, :points
+  attr_reader :grid, :points, :safe_distances
 
   def initialize(points)
     @points = points
     x_coords = @points.map { |i| i[0] }
     y_coords = @points.map { |i| i[1] }
     @grid = Array.new(y_coords.max + 1) { Array.new (x_coords.max + 1) { '.' } }
+    @safe_distances = Array.new(y_coords.max + 1) { Array.new (x_coords.max + 1) { 0 } }
     fill
     find_bounding_rectangle
     make_blacklist
@@ -63,6 +64,17 @@ class Voronoi
     end
     largest_area
   end
+
+  def find_safe_area
+    @safe_distances.each_index do |row|
+      @safe_distances[row].each_index do |col|
+        @points.each { |i| @safe_distances[row][col] += (i[0] - col).abs + (i[1] - row).abs }
+      end
+    end
+    safe_area = 0
+    @safe_distances.each { |i| safe_area += i.count { |x| x < 10000 } }
+    safe_area
+  end
 end
 
 points = File.readlines('./input', :chomp => true).map do |i|
@@ -72,3 +84,4 @@ end
 
 prob = Voronoi.new(points)
 puts prob.get_largest_area
+puts prob.find_safe_area
