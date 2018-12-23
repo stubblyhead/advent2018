@@ -13,6 +13,19 @@ class Voronoi
       @grid[o[1]][o[0]] = (i+65).chr
     end
   end
+
+  def fill
+    @grid.each_index do |row|
+      @grid[row].each_index do |col|
+        distances = []
+        @points.each.with_index do |o, i|
+          distances[i] = (o[0] - col).abs + (o[1] - row).abs
+        end
+        shortest = distances.min
+        distances.count(shortest) > 1 ? @grid[row][col] = '-' : @grid[row][col] = (distances.index(shortest) + 65).chr
+      end
+    end
+  end
 end
 
 points = File.readlines('./testcase', :chomp => true).map do |i|
