@@ -12,6 +12,8 @@ class Voronoi
   end
 
   def find_bounding_rectangle
+    # any cell touching the rectangle enclosing all points will extend beyond
+    # it infinitely, so defining that rectangle is important
     @max_x = 0
     @max_y = 0
     @min_x = Float::INFINITY
@@ -39,6 +41,8 @@ class Voronoi
   end
 
   def make_blacklist
+    # any cell that touches the bounding rectangle is infinite, so don't bother
+    # checking its area
     @blacklist = []
     # for each row push the values in the @min_x and @max_y columns
     @grid.each { |row| @blacklist.push(row[@min_x]); @blacklist.push(row[@max_x]) }
@@ -61,7 +65,7 @@ class Voronoi
   end
 end
 
-points = File.readlines('./testcase', :chomp => true).map do |i|
+points = File.readlines('./input', :chomp => true).map do |i|
   tmp = i.split(',')
   [tmp[0].to_i, tmp[1].to_i]
 end
